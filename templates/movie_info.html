@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Info Page</title>
+    <style>
+  .fixed-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
+    background-color: #FFB6C1; /* 배경색 설정 */
+  }
+</style>
+</head>
+<body>
+<div class="fixed-container">
+  <div>{{ login_id }}</div>
+  <form action="/main" method="get">
+    <button type="submit">Main Page</button> <!-- 버튼 타입을 'submit'으로 변경 -->
+  </form>
+</div>
+    <h1>{{ movie[0][1] }}</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>director</th>
+                <th>genre</th>
+                <th>release date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>{{ movie[0][2] }}</td>
+                <td>{{ movie[0][3] }}</td>
+                <td>{{ movie[0][4] }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+    <h2>[Reviews]</h2>
+    <h2>Average Ratings: {{rating}}</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ratings</th>
+                <th>user</th>
+                <th>review</th>
+                <th>time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+            <tr>
+                <td>{{ review[0] }}</td>
+                <td style="background-color: #FFB6C1;">{{ review[1] }}</td>
+                <td>{{ review[2] }}</td>
+                <td>{{ review[3].strftime('%Y-%m-%d %H:%M')  }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>My Review : </h2>
+    <form action="/submit-review/{{ movie[0][0] }}" method="post">
+        <label for="score"></label>
+        <select id="score" name="score">
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+        <label for="content"></label>
+        <textarea id="content" name="content" rows="5" cols="33" required></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommendation</title>
+    <style>
+        .fixed-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
+    background-color: #FFB6C1; /* 배경색 설정 */
+  }
+    </style>
+</head>
+<body>
+<div class="fixed-container">
+  <div>{{ login_id }}</div>
+  <form action="/main" method="get">
+    <button type="submit">Main Page</button> <!-- 버튼 타입을 'submit'으로 변경 -->
+  </form>
+</div>
+<h1>Recommended Movies</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>title</th>
+                <th>ratings</th>
+                <th>director</th>
+                <th>genre</th>
+                <th>release Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recommended_movie in recommended_movies %}
+            <tr>
+                <td style="background-color: #90EE90;"><a href="/movie_info/{{ recommended_movie[0] | urlencode }}">{{ recommended_movie[0] }}</a></td>
+                <td>{{ recommended_movie[1] }}</td>
+                <td>{{ recommended_movie[2] }}</td>
+                <td>{{ recommended_movie[3] }}</td>
+                <td>{{ recommended_movie[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

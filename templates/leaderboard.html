@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leader Board</title>
+    <style>
+        .fixed-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
+    background-color: #FFB6C1; /* 배경색 설정 */
+  }
+    </style>
+</head>
+<body>
+<div class="fixed-container">
+  <div>{{ login_id }}</div>
+  <form action="/main" method="get">
+    <button type="submit">Main Page</button> <!-- 버튼 타입을 'submit'으로 변경 -->
+  </form>
+</div>
+<form action = "/leader-board" method = "get">
+    <h1>TOP 5 Leader Board</h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th># of reviews</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+
+</body>
+</html>

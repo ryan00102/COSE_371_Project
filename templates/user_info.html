@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info Page</title>
+    <style>
+  .fixed-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
+    background-color: #FFB6C1; /* 배경색 설정 */
+  }
+</style>
+</head>
+<body>
+    <div class="fixed-container">
+  <div>{{ login_id }}</div>
+  <form action="/main" method="get">
+    <button type="submit">Main Page</button> <!-- 버튼 타입을 'submit'으로 변경 -->
+  </form>
+</div>
+    <h1>{{ id }}</h1>
+    {% if not isMe and role != 'admin'  %}
+    <form action="/follow/{{ id }}" method="post">
+        <button type="follow">follow</button>
+    </form>
+    <form action="/mute/{{ id }}" method="post">
+        <button type="mute">mute</button>
+    </form>
+    {% endif %}
+    <h2>[Reviews]</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ratings</th>
+                <th>user</th>
+                <th>review</th>
+                <th>time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+            <tr>
+                <td>{{ review[0] }}</td>
+                <td style="background-color: #90EE90;">{{ review[1] }}</td>
+                <td>{{ review[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>[Followers]</h2>
+    <table>
+        <tbody>
+            {% for follower in followers %}
+            <tr>
+                <td style="background-color: #FFB6C1;">{{ follower[0] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if role == "admin" %}
+        <h2>[Add Movie]</h2>
+        <form action="/add-movie" method="post">
+            <label for="title">Title:</label>
+            <textarea id="title" name="title" rows="1" cols="33" required></textarea><br><br>
+            <label for="director">Director:</label>
+            <textarea id="director" name="director" rows="1" cols="33" required></textarea><br><br>
+            <label for="genre">Genre: </label>
+            <br>
+            <select id="genre" name="genre">
+                <option value="action">action</option>
+                <option value="drama">drama</option>
+                <option value="comedy">comedy</option>
+                <option value="fantasy">fantasy</option>
+                <option value="horror">follower</option>
+                <option value="mystery">mystery</option>
+                <option value="romance">romance</option>
+                <option value="thriller">thriller</option>
+                <option value="western">western</option>
+            </select>
+            <br>
+            <label for="date">Release Date:</label>
+            <br>
+            <input type="date" id="date" name="date" required>
+            <br>
+            <button type="submit">Add</button>
+        </form>
+    {% else %}
+        {% if isMe %}
+            <h2>[Followed]</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>user</th>
+                        <th>unfollow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for following_user in following_users %}
+                    <tr>
+                        <td style="background-color: #FFB6C1;">{{ following_user[0] }}</td>
+                        <td>
+                            <form action="/unfollow/{{ following_user[0] }}" method="post">
+                                <button type="unfollow">unfollow</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2>[Muted]</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>user</th>
+                        <th>unmute</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for muted_user in muted_users %}
+                    <tr>
+                        <td style="background-color: #FFB6C1;">{{ muted_user[0] }}</td>
+                        <td>
+                            <form action="/unmute/{{ muted_user[0] }}" method="post">
+                                <button type="unmute">unmute</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+        {% endif %}
+
+
+    {% endif %}
+</body>
+</html>

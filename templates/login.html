@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+
+<form action="/login" method="post">
+    <h1 style="font-size: 32px; font-weight: bold;">DB Term Project: Movie Reviews</h1>
+    <label for="user_id">ID:</label><br>
+    <input id="user_id" type="text" name="id" value=""><br>
+
+    <label for="user_pwd">PASSWORD:</label><br>
+    <input id="user_pwd" type="password" name="password" value=""><br><br>
+
+    <input type="submit" name="send" value="sign in">
+    <input type="submit" name="send" value="sign up">
+</form>
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+</body>
+</html>
